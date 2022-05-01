@@ -1,14 +1,15 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const fs = require("fs");
-require('dotenv').config({ path: './environment/settings.env' })
+const path = require("path");
+require('dotenv').config({ path: path.join(__dirname, "environment","settings.env") })
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const GUILD_ID = process.env.GUILD_ID;
 const APPLICATION_ID= process.env.APPLICATION_ID;
 
 const commands = [];
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync(path.join(__dirname, "/commands")).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
